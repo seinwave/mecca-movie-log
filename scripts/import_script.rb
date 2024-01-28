@@ -1,24 +1,25 @@
-require 'pg'
 require 'csv'
+require_relative 'config/environment'
 
-# Establish a connection to the database
-conn = PG.connect(dbname: 'your_database_name', user: 'your_username', password: 'your_password')
+def import_movies(file_path)
+  file_path = File.expand_path(file_path)
 
-# Read the CSV file
-
-# Close the connection
-conn.close
-
-def import_movies
-  CSV.foreach('Mecca Movie Log - Sheet1.csv', headers: true) do |row|
+  puts "importing movies from #{file_path}!"
+  CSV.foreach(file_path, headers: true) do |row|
     # Skip if the row is empty or the title is empty
+    puts 'ROW!', row['TITLE']
     next if row['TITLE'].nil? || row['TITLE'].strip.empty?
-  
+
+    puts "importing #{row['TITLE']}"
+    
     # Insert movie if it doesn't exist
     movie_title = row['TITLE']
-    conn.exec_params('INSERT INTO movies (title) VALUES ($1) ON CONFLICT (title) DO NOTHING', [movie_title])
+    Movie.find_or_create_by(title: movie_title)
   end
-end 
+end
 
-def im
+
+
+
+import_movies(ARGV[0]) 
   
