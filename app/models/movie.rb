@@ -1,3 +1,3 @@
 class Movie < ApplicationRecord
-  has_many: ratings
+  has_many :ratings
 end
