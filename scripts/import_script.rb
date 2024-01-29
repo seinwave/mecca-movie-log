@@ -49,55 +49,110 @@ LETTER_GRADES = {
 'D-' => 4,
 'F+' => 3,
 'F'  => 2,
-'F-' => 1
+'F-' => 1,
 'Fart Minus' => -2000
 }
 
-def import_ratings(file_path, year)
-  file_path = File.expand_path(file_path)
-  puts "importing ratings from #{file_path}!"
-  CSV.foreach(file_path, headers: true) do |row|
-    # Skip if the row is empty or the title is empty
-    next if !is_valid_title?(row['TITLE'])
+class MovieImporter
 
-    puts "importing #{row['TITLE']}"
-
-    # Insert movie if it doesn't exist
-    movie_title = row['TITLE']
-    movie = Movie.find_by(title: movie_title)
-    if !movie
-      puts "movie not found for #{movie_title}"
-      next
-    end
-
-    # parse date from DATE entry
-    date = row['DATE']
-    date = Date.strptime(row['DATE'], '%m/%d/%Y')
-   
-    # create a rating for Reba, user_id: 1
-    reba_score = LETTER_GRADES[row['REBA']]
-    reba_rating = Rating.new(user_id: 1, movie_id: movie.id, watched_date: date, score: reba_score)
-    reba_rating.save
-
-    # create a rating for Matt, user_id: 2
-    matt_score = LETTER_GRADES[row['MATT']]
-    matt_rating = Rating.new(user_id: 2, movie_id: movie.id, watched_date: date, score: matt_score)
-    matt_rating.save
+  def initialize
+    @current_month = nil
+    @current_year = nil
   end
-end
+  
+  def has_existing_rating?(user_id, movie_id)
+    Rating.find_by(user_id: user_id, movie_id: movie_id)
+  end 
 
 
-def import_all_years(dir_path)
-  # for each file in the dir path
-  # open it, and import the ratings according to the YEAR which is in the file name
-  # e.g. 2019.csv, 2020.csv
+  def import_ratings(file_path)
+    file_path = File.expand_path(file_path)
+    # get year from file_path
+    @current_year = file_path.split('/')[-1].split('.')[0].to_i
+
+    puts "importing ratings from #{file_path}!"
+    CSV.foreach(file_path, headers: true) do |row|
+      # Skip if the row is empty or the title is empty
+      # capture month
+      
+      next if row['TITLE'].nil? || row['TITLE'].strip.empty?
+
+      @current_month = row['TITLE'].strip.capitalize if is_a_case_insensitive_month?(row['TITLE'])
+
+      next if !is_valid_title?(row['TITLE'])
+
+      puts "importing #{row['TITLE']}"
+
+      # Insert movie if it doesn't exist
+      movie_title = row['TITLE']
+      movie = Movie.find_by(title: movie_title)
+      if !movie
+        puts "movie not found for #{movie_title}"
+        next
+      end
+
+      # parse date from DATE entry
+      date = row['DATE']
+
+      if date
+        puts "DATE: #{date}" 
+        date = Date.strptime("#{@current_year}/#{date}", '%Y/%m/%d')
+      else 
+        # assign date to a random date in the month
+        puts "no date found for #{movie_title} in #{@current_month}"
+        date = Date.new(@current_year, MONTH_NAMES.index(@current_month) + 1, rand(1..28))
+      end 
+
+    
+      # create a rating for Reba, user_id: 1
+      if !has_existing_rating?(1, movie.id)
+        reba_score = LETTER_GRADES[row['REBA']]
+        puts "creating rating for Reba"
+        reba_rating = Rating.new(user_id: 1, movie_id: movie.id, watched_date: date, score: reba_score)
+        if !reba_rating.valid?
+          puts "reba_rating is invalid"
+          next
+        end 
+        reba_rating.save
+      end
+
+      # create a rating for Matt, user_id: 2
+      if !has_existing_rating?(2, movie.id)
+        matt_score = LETTER_GRADES[row['MATT']]
+        puts 'creating rating for Matt'
+        matt_rating = Rating.new(user_id: 2, movie_id: movie.id, watched_date: date, score: matt_score)
+        if !matt_rating.valid?
+          puts "matt_rating is invalid"
+          next
+        end 
+        matt_rating.save
+      end 
+  end
+end 
+
+
+end 
+
+ def import_all_years(dir_path)
   Dir.foreach(dir_path) do |file_name|
+    puts "file_name: #{file_name}"
     next if file_name == '.' || file_name == '..'
     year = file_name.split('.')[0].to_i
     puts "year: #{year}"
     import_ratings("#{dir_path}/#{file_name}", year)
   end
-
 end 
+  
+
+
+
+
+
+
+
+
+importer = MovieImporter.new
+
+importer.import_ratings(ARGV[0])
 
   
