@@ -5,6 +5,8 @@ ruby "3.2.2"
 
 # testing suite
 gem "rspec-rails", "~> 6.0.2"
+gem 'guard-rspec', require: false
+
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.8"
