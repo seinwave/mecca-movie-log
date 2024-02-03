@@ -2,11 +2,18 @@ require 'rails_helper'
 
 RSpec.describe "Movies", type: :request do
   describe "GET /index" do
-    
-    it "returns http success" do
+
+    before(:each) do
       get "/movies"
+    end 
+
+    it "returns http success" do
       expect(response).to have_http_status(:success)
     end 
+
+    it "renders the movie index template" do
+      expect(response).to render_template(:index)
+    end
 
   end
 end
