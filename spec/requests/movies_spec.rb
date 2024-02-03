@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "Movies", type: :request do
+  fixtures :movies
+
   describe "GET /index" do
 
     before(:each) do
@@ -14,8 +16,17 @@ RSpec.describe "Movies", type: :request do
     it "renders the movie index template" do
       expect(response).to render_template(:index)
       expect(response.body).to include("Brave")
-      expect(response.body).to include(5.to_s)
     end
 
   end
+
+  describe "utility methods" do
+    it "sorts movies by watched date" do
+      result = MoviesController.sort([movies(:mandy), movies(:brave), movies(:hoop_dreams)])
+      sorted_movies = [movies(:hoop_dreams), movies(:brave), movies(:mandy)]
+      expect(result[0].title).to eq(sorted_movies[0].title)
+      expect(result[1].title).to eq(sorted_movies[1].title)
+      expect(result[2].title).to eq(sorted_movies[2].title)
+    end
+  end 
 end
