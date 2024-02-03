@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+include RatingsHelper
   
   def index 
     @movies = MoviesController.sort(Movie.all)

@@ -1,11 +1,36 @@
 <div>
   <h1>Mecca Movie Log</h1>
-  <div>
-    <% @movies.each do |movie| %>
-    <div><%= movie.title %></div>
-    <div>
-      <% if movie.ratings[0] %> <%= movie.ratings[0].score %> <% end %> <% if
-      movie.ratings[1] %> <%= movie.ratings[1].score %> <% end %>
+  <div class="movies-container">
+    <% current_year = nil %> <% current_month = nil %> <% @movies.each do
+    |movie| %> <% if current_year != movie.ratings[0].watched_date.year ||
+    current_month != movie.ratings[0].watched_date.month %>
+    <h2 class="month-year">
+      <%= "#{Date::MONTHNAMES[movie.ratings[0].watched_date.month]}
+      #{movie.ratings[0].watched_date.year}" %>
+    </h2>
+    <% current_year = movie.ratings[0].watched_date.year %> <% current_month =
+    movie.ratings[0].watched_date.month %> <% end %>
+    <div class="movie-row">
+      <div class="info-column">
+        <div id="title"><%= movie.title %></div>
+        <div id="watched-date">
+          <%= movie.ratings[0].watched_date.strftime('%d %b') %>
+        </div>
+      </div>
+      <div class="scores-column">
+        <div class="rating-column">
+          <div class="name-row">Reba</div>
+          <div class="rating-row">
+            <%= convert_to_letter_grade(movie.ratings[0]) %>
+          </div>
+        </div>
+        <div class="rating-column">
+          <div class="name-row">Matt</div>
+          <div class="rating-row">
+            <%= convert_to_letter_grade(movie.ratings[1]) %>
+          </div>
+        </div>
+      </div>
     </div>
     <% end %>
   </div>

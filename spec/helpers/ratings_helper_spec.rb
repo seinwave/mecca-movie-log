@@ -11,5 +11,12 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe RatingsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'utility methods' do
+    fixtures :ratings 
+
+    it 'converts a rating to a letter grade' do
+      result = helper.convert_to_letter_grade(ratings(:reba_brave))
+      expect(result).to eq('D+')
+    end
+  end
 end
