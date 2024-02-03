@@ -13,6 +13,7 @@ RSpec.describe "Movies", type: :request do
 
     it "renders the movie index template" do
       expect(response).to render_template(:index)
+      expect(response.body).to include("Braveheart")
     end
 
   end

@@ -4,8 +4,10 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+reba_mandy: { score: 8, watched_date: '2021-01-01', user: reba, movie: mandy }
+
+reba_brave: { score: 6, watched_date: '2021-01-01', user: reba, movie: brave }
+
+matt_mandy: { score: 7, watched_date: '2021-01-01', user: matt, movie: mandy }
+
+matt_brave: { score: 9, watched_date: '2021-01-01', user: matt, movie: brave }
