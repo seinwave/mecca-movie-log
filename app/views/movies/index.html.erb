@@ -3,6 +3,10 @@
   <div>
     <% @movies.each do |movie| %>
     <div><%= movie.title %></div>
+    <div>
+      <% if movie.ratings[0] %> <%= movie.ratings[0].score %> <% end %> <% if
+      movie.ratings[1] %> <%= movie.ratings[1].score %> <% end %>
+    </div>
     <% end %>
   </div>
 </div>
