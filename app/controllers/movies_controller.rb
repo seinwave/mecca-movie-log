@@ -1,16 +1,16 @@
+# frozen_string_literal: true
+
+require 'pry'
 class MoviesController < ApplicationController
-include RatingsHelper
-  
-  def index 
+  include RatingsHelper
+
+  def index
     @movies = MoviesController.sort(Movie.all)
   end
 
-
-  private
-
   def self.sort(movies)
-    movies.sort_by { |movie| 
-    movie.ratings.first.watched_date || movie.ratings.last.watched_date }.reverse
+    movies.sort_by do |movie|
+      movie.ratings.first.watched_date || movie.ratings.last.watched_date
+    end.reverse
   end
-
 end
