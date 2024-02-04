@@ -24,4 +24,14 @@ module RatingsHelper
     score = rating.score
     SCORE_TO_LETTER_GRADE[score]
   end
+
+  def running_average(users)
+    averages = []
+    users.each do |user|
+      ratings = Rating.where(user_id: user.id)
+      averages << ratings.average(:score)
+    end
+
+    return (averages.sum / averages.length).round(1)
+  end
 end

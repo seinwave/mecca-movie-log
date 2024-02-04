@@ -14,11 +14,20 @@ require 'rails_helper'
 # end
 RSpec.describe RatingsHelper, type: :helper do
   describe 'utility methods' do
-    fixtures :ratings
 
     it 'converts a rating to a letter grade' do
       result = helper.convert_to_letter_grade(ratings(:reba_brave))
       expect(result).to eq('D+')
+    end
+
+    it 'calculates a running average rating, for one user' do 
+      result = helper.running_average([users(:reba)])
+      expect(result).to eq(8)
+    end
+
+    it 'calculates a running average rating, multiple users' do 
+      result = helper.running_average([users(:reba), users(:matt)])
+      expect(result).to eq(8.3)
     end
   end
 end
