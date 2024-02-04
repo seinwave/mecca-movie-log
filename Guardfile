@@ -53,6 +53,13 @@ guard :rspec, cmd: 'bundle exec rspec' do
       rspec.spec.call("controllers/#{m[1]}_controller"),
       rspec.spec.call("requests/#{m[1]}"),
       rspec.spec.call("acceptance/#{m[1]}")
+
+
+
+
+
+
+      
     ]
   end
 
