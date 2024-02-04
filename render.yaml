@@ -1,7 +1,7 @@
 databases:
   - name: seidholz-apps
-    databaseName: sbs-prod
-    user: rose-garden-prod-user
+    databaseName: sbs_prod
+    user: rose_garden_prod_user
     plan: starter
 
 services:
