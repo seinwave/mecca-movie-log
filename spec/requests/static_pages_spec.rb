@@ -3,7 +3,24 @@
 require 'rails_helper'
 
 RSpec.describe 'StaticPages', type: :request do
-  describe 'GET /index' do
-    pending "add some examples (or delete) #{__FILE__}"
+  describe 'static route tests' do
+    
+    it "should get root" do 
+      get root_path
+      expect(response).to have_http_status(:success)
+      expect(response).to render_template(:index)
+    end
+
+    it "should get movies" do
+      get movies_path
+      expect(response).to have_http_status(:success)
+      expect(response).to render_template(:index)
+    end
+
+    it 'should get stats' do
+      get stats_path
+      expect(response).to have_http_status(:success)
+      expect(response).to render_template(:stats)
+    end
   end
 end

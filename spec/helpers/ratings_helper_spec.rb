@@ -2,21 +2,27 @@
 
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the RatingsHelper. For example:
-#
-# describe RatingsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe RatingsHelper, type: :helper do
   describe 'utility methods' do
     it 'converts a rating to a letter grade' do
       result = helper.convert_to_letter_grade(ratings(:reba_brave))
       expect(result).to eq('D+')
+    end
+
+    it 'converts a numerical score to a letter grade' do
+      result = helper.convert_score_to_letter_grade(8.3)
+      expect(result).to eq('C')
+    end
+
+    it 'gets ratings for a movie, from a particular user' do
+      result = helper.get_ratings(users(:reba), movies(:brave))
+      expect(result[0].score).to eq(6)
+    end 
+
+    it 'gets ratings for a movie, from all' do
+      result = helper.get_ratings(nil, movies(:brave))
+      expect(result[0].score).to eq(6)
+      expect(result[1].score).to eq(9)
     end
 
     it 'calculates a running average rating, for one user' do
