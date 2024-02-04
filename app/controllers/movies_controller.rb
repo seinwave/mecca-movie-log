@@ -5,7 +5,9 @@ class MoviesController < ApplicationController
   include RatingsHelper
 
   def index
-    @movies = MoviesController.sort(Movie.all)
+    @movies = Rails.cache.fetch('movies_index', expires_in: 1.hour) do
+      MoviesController.sort(Movie.all)
+    end
   end
 
   def self.sort(movies)
@@ -20,3 +22,4 @@ class MoviesController < ApplicationController
     sorted_movies
   end
 end
+
