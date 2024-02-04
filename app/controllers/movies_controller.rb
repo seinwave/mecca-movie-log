@@ -22,4 +22,3 @@ class MoviesController < ApplicationController
     sorted_movies
   end
 end
-
