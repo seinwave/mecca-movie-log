@@ -63,10 +63,10 @@ module RatingsHelper
     top_movies.sort_by { |movie| -top_ratings[movie.id] }
   end
 
-  def highest_rated_movies_with_scores(limit = 10)
+  def highest_rated_movies_with_scores(limit = 20)
     movies = highest_rated_movies(limit)
     matt = User.where(first_name: 'Matt').first
-    reba = User.where(first_name: 'Reba').first
+    reba = User.where(first_name: 'Rebecca').first
     movies.map do |movie|
       ratings = Rating.where(movie_id: movie.id, user_id: [matt.id, reba.id])
       scores = ratings.map { |rating| convert_to_letter_grade(rating) }

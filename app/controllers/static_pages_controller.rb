@@ -6,7 +6,7 @@ class StaticPagesController < ApplicationController
   def stats
     @count = Movie.count
 
-    reba = User.where(first_name: 'Reba').first
+    reba = User.where(first_name: 'Rebecca').first
     matt = User.where(first_name: 'Matt').first
     @reba_average = convert_score_to_letter_grade(running_average([reba]))
     @matt_average = convert_score_to_letter_grade(running_average([matt]))

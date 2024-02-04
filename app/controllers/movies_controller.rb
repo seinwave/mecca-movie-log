@@ -9,8 +9,15 @@ class MoviesController < ApplicationController
   end
 
   def self.sort(movies)
-    movies.sort_by do |movie|
-      movie.ratings.first.watched_date || movie.ratings.last.watched_date
-    end.reverse
+  movies_with_watched_dates = movies.select do |movie|
+    movie.ratings.any? && movie.ratings.all? { |rating| rating.watched_date.present? }
   end
+
+  sorted_movies = movies_with_watched_dates.sort_by do |movie|
+    movie.ratings.map(&:watched_date).max
+  end.reverse
+
+  sorted_movies
+end
+
 end
