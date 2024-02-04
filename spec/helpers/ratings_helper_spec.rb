@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 # Specs in this file have access to a helper object that includes
@@ -12,7 +14,7 @@ require 'rails_helper'
 # end
 RSpec.describe RatingsHelper, type: :helper do
   describe 'utility methods' do
-    fixtures :ratings 
+    fixtures :ratings
 
     it 'converts a rating to a letter grade' do
       result = helper.convert_to_letter_grade(ratings(:reba_brave))
