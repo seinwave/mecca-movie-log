@@ -72,8 +72,7 @@ module RatingsHelper
       scores = ratings.map { |rating| convert_to_letter_grade(rating) }
       OpenStruct.new(title: movie.title, matt_score: scores[0], reba_score: scores[1])
     end
-  end    
-
+  end
 
   def biggest_divergence
     user_ids = User.pluck(:id)
