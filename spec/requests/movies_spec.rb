@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'Movies', type: :request do
-  fixtures :movies
 
   describe 'GET /index' do
     before(:each) do
