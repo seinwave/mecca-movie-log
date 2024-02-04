@@ -23,7 +23,7 @@ RSpec.describe "Movies", type: :request do
   describe "utility methods" do
     it "sorts movies by watched date" do
       result = MoviesController.sort([movies(:mandy), movies(:brave), movies(:hoop_dreams)])
-      sorted_movies = [movies(:hoop_dreams), movies(:brave), movies(:mandy)]
+      sorted_movies = [ movies(:mandy),movies(:brave), movies(:hoop_dreams)]
       expect(result[0].title).to eq(sorted_movies[0].title)
       expect(result[1].title).to eq(sorted_movies[1].title)
       expect(result[2].title).to eq(sorted_movies[2].title)
