@@ -63,6 +63,18 @@ module RatingsHelper
     top_movies.sort_by { |movie| -top_ratings[movie.id] }
   end
 
+  def highest_rated_movies_with_scores(limit = 10)
+    movies = highest_rated_movies(limit)
+    matt = User.where(first_name: 'Matt').first
+    reba = User.where(first_name: 'Reba').first
+    movies.map do |movie|
+      ratings = Rating.where(movie_id: movie.id, user_id: [matt.id, reba.id])
+      scores = ratings.map { |rating| convert_to_letter_grade(rating) }
+      OpenStruct.new(title: movie.title, matt_score: scores[0], reba_score: scores[1])
+    end
+  end    
+
+
   def biggest_divergence
     user_ids = User.pluck(:id)
     movies = Movie.all

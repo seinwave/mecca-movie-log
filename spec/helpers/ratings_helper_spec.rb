@@ -41,6 +41,13 @@ RSpec.describe RatingsHelper, type: :helper do
       expect(result.length).to eq(1)
     end
 
+    it 'returns the highest rated movies titles, with matt and rebas respective scores' do
+      result = helper.highest_rated_movies_with_scores(1)
+      expect(result[0].title).to eq('Hoop Dreams')
+      expect(result[0].matt_score).to eq('B-')
+      expect(result[0].reba_score).to eq('B-')
+    end
+
     it 'finds the movie where matt and reba disagree the most on the score' do
       result = helper.biggest_divergence
       expect(result.title).to eq('Brave')
