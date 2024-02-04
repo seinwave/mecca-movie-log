@@ -17,7 +17,7 @@ RSpec.describe RatingsHelper, type: :helper do
     it 'gets ratings for a movie, from a particular user' do
       result = helper.get_ratings(users(:reba), movies(:brave))
       expect(result[0].score).to eq(6)
-    end 
+    end
 
     it 'gets ratings for a movie, from all' do
       result = helper.get_ratings(nil, movies(:brave))

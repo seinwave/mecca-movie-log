@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StaticPagesController < ApplicationController
-include RatingsHelper
+  include RatingsHelper
 
   def stats
     reba = User.where(first_name: 'Reba').first
@@ -15,5 +15,4 @@ include RatingsHelper
     @matt_score_on_divergence = convert_to_letter_grade(Rating.where(movie_id: @biggest_divergence.id, user_id: matt.id).first)
     @reba_score_on_divergence = convert_to_letter_grade(Rating.where(movie_id: @biggest_divergence.id, user_id: reba.id).first)
   end
-
 end

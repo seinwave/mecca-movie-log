@@ -39,7 +39,7 @@ module RatingsHelper
   def running_average(users)
     if users.empty?
       users = User.all
-    end 
+    end
     averages = []
     users.each do |user|
       ratings = Rating.where(user_id: user.id)

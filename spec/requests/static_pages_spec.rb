@@ -4,8 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'StaticPages', type: :request do
   describe 'static route tests' do
-    
-    it "should get root" do 
+    it "should get root" do
       get root_path
       expect(response).to have_http_status(:success)
       expect(response).to render_template(:index)
