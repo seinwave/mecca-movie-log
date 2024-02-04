@@ -32,6 +32,20 @@ module RatingsHelper
       averages << ratings.average(:score)
     end
 
-    return (averages.sum / averages.length).round(1)
+    (averages.sum / averages.length).round(1)
+  end
+
+  def highest_rated_movies(limit = 10)
+    user_ids = User.pluck(:id)
+
+    top_ratings = Rating.where(user_id: user_ids)
+                        .group(:movie_id)
+                        .order('SUM(score) DESC')
+                        .limit(limit)
+                        .sum(:score)
+
+    top_movies = Movie.where(id: top_ratings.keys)
+
+    top_movies.sort_by { |movie| -top_ratings[movie.id] }
   end
 end
