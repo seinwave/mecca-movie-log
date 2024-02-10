@@ -5,16 +5,8 @@ class RatingsController < ApplicationController
     @ratings = Rating.all
   end
 
-  def paired_ratings
-    Rating.select(:movie_id, :watched_date)
-          .group(:movie_id, :watched_date)
-          .having('count(*) > 1')
-          .map { |r| Rating.where(movie_id: r.movie_id, watched_date: r.watched_date) }
-  end
+  def sort_rating_sets_by_date
+    @rating_sets = Rating.all.group_by(&:watched_date).sort_by { |date, _ratings| date }
+  end 
 
-  def orphan_ratings
-    paired_movie_ids_and_dates = paired_ratings.flatten.map { |rating| [rating.movie_id, rating.watched_date] }
-    Rating.where.not(movie_id: paired_movie_ids_and_dates.map(&:first),
-                     watched_date: paired_movie_ids_and_dates.map(&:last))
-  end
 end

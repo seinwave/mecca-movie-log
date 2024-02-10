@@ -25,30 +25,15 @@ RSpec.describe 'Ratings', type: :request do
   end
 
   describe 'Arrange ratings' do
-    context 'when pairing ratings' do
-      before do
-        @ratings = controller_instance.send(:paired_ratings)
-      end
-      it 'finds all ratings that share a watched_date and movie_id' do
-        paired_ratings = controller_instance.send(:paired_ratings)
-        expect(paired_ratings[0][0].movie_id).to eq(paired_ratings[0][1].movie_id)
-        expect(paired_ratings[0][0].user_id).to_not eq(paired_ratings[0][1].user_id)
-      end
-
-      it 'does not pair ratings with different watched_date' do
-        paired_ratings = controller_instance.send(:paired_ratings)
-        expect(paired_ratings).to_not include(movies(:inside_out))
-      end
-
-      context 'when finding orphan ratings' do
+      context 'when sorting ratings' do 
         before do
-          @orphan_ratings = controller_instance.send(:orphan_ratings)
+          @sorted_ratings = controller_instance.send(:sort_rating_sets_by_date)
         end
-        it 'returns ratings with no matching pair' do
-          orphan_ratings = controller_instance.send(:orphan_ratings)
-          expect(orphan_ratings).to include(ratings(:reba_inside_out))
-        end
-      end
+        it 'sorts paired and orphaned ratings by watched_date' do
+          expect(@sorted_ratings).to be_an_instance_of(Array)
+          expect(@sorted_ratings[0][0]).to be < @sorted_ratings[1][0]
+          # data structure is [watched_date, [ratings]]
+        end 
     end
   end
 end
