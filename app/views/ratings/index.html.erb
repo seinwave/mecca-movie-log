@@ -1,0 +1,11 @@
+<div>
+  <h1>Ratings</h1>
+  <div>
+    <%= @ratings.each do |rating| %>
+    <div>
+      <h2><%= rating.movie.title %></h2>
+      <p><%= convert_to_letter_grade(rating) %></p>
+    </div>
+    <% end %>
+  </div>
+</div>

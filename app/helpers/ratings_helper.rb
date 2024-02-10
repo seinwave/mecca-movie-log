@@ -25,6 +25,10 @@ module RatingsHelper
     Rating.where(user_id: users.map(&:id), movie_id: movie.id).to_a
   end
 
+  def get_complimentary_rating(rating)
+    Rating.where(movie_id: rating.movie_id).where.not(user_id: rating.user_id).first
+  end
+
   def convert_to_letter_grade(rating)
     score = rating.score
     score = score.round
@@ -37,9 +41,7 @@ module RatingsHelper
   end
 
   def running_average(users)
-    if users.empty?
-      users = User.all
-    end
+    users = User.all if users.empty?
     averages = []
     users.each do |user|
       ratings = Rating.where(user_id: user.id)
