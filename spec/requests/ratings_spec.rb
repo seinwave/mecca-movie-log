@@ -25,15 +25,15 @@ RSpec.describe 'Ratings', type: :request do
   end
 
   describe 'Arrange ratings' do
-      context 'when sorting ratings' do 
-        before do
-          @sorted_ratings = controller_instance.send(:sort_rating_sets_by_date)
-        end
-        it 'sorts paired and orphaned ratings by watched_date' do
-          expect(@sorted_ratings).to be_an_instance_of(Array)
-          expect(@sorted_ratings[0][0]).to be < @sorted_ratings[1][0]
-          # data structure is [watched_date, [ratings]]
-        end 
+    context 'when sorting ratings' do
+      before do
+        @sorted_ratings = controller_instance.send(:sort_rating_sets_by_date)
+      end
+      it 'sorts paired and orphaned ratings by watched_date' do
+        expect(@sorted_ratings).to be_an_instance_of(Array)
+        expect(@sorted_ratings[0][0]).to be < @sorted_ratings[1][0]
+        # data structure is [watched_date, [ratings]]
+      end
     end
   end
 end
