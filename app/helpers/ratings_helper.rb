@@ -29,7 +29,13 @@ module RatingsHelper
     Rating.where(movie_id: rating.movie_id).where.not(user_id: rating.user_id).first
   end
 
-  def convert_to_letter_grade(rating)
+  def sort_ratings_by_date
+    Rating.order(watched_date: :desc)
+  end
+
+  def render_rating(rating)
+    return "#{rating.user.first_name} didn't watch it." if rating.nil?
+
     score = rating.score
     score = score.round
     SCORE_TO_LETTER_GRADE[score]
@@ -71,7 +77,7 @@ module RatingsHelper
     reba = User.where(first_name: 'Rebecca').first
     movies.map do |movie|
       ratings = Rating.where(movie_id: movie.id, user_id: [matt.id, reba.id])
-      scores = ratings.map { |rating| convert_to_letter_grade(rating) }
+      scores = ratings.map { |rating| render_rating(rating) }
       OpenStruct.new(title: movie.title, matt_score: scores[0], reba_score: scores[1])
     end
   end

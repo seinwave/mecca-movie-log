@@ -4,7 +4,7 @@
     <%= @ratings.each do |rating| %>
     <div>
       <h2><%= rating.movie.title %></h2>
-      <p><%= convert_to_letter_grade(rating) %></p>
+      <p><%= render_rating(rating) %></p>
     </div>
     <% end %>
   </div>

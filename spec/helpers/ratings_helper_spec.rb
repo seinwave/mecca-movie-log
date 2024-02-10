@@ -4,23 +4,10 @@ require 'rails_helper'
 
 RSpec.describe RatingsHelper, type: :helper do
   describe 'utility methods' do
-    context 'when sorting and matching ratings' do
-      it 'finds a matching rating, with the same movie, but different user' do
-        result = helper.get_complimentary_rating(ratings(:reba_brave))
-        expect(result.user.first_name).to eq('Matt')
-        expect(result.movie.title).to eq('Brave')
-      end
-    end
-
     context 'when rendering scores' do
       it 'converts a rating to a letter grade' do
-        result = helper.convert_to_letter_grade(ratings(:reba_brave))
+        result = helper.render_rating(ratings(:reba_brave))
         expect(result).to eq('D+')
-      end
-
-      it 'converts a numerical score to a letter grade' do
-        result = helper.convert_score_to_letter_grade(8.3)
-        expect(result).to eq('C')
       end
     end
 

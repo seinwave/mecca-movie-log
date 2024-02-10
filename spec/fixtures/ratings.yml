@@ -16,6 +16,12 @@ reba_mandy:
   user: reba
   movie: mandy
 
+reba_inside_out:
+  score: 8
+  watched_date: '2023-01-01'
+  user: reba
+  movie: inside_out
+
 matt_mandy:
   score: 7
   watched_date: '2024-01-01'
