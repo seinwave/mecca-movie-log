@@ -9,6 +9,7 @@ ruby '3.2.2'
 gem 'rubocop', require: false
 
 # testing suite
+gem 'faker'
 gem 'guard-rspec', require: false
 gem 'rails-controller-testing'
 gem 'rspec-rails', '~> 6.0.2'
