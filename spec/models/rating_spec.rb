@@ -13,26 +13,26 @@ RSpec.describe 'Ratings model', type: :controller do
     end
   end
 
-  describe 'validations' do 
+  describe 'validations' do
     context 'when a rating is valid' do
       let(:rating) { FactoryBot.create(:rating) }
       it 'should have a valid score, movie_id, and user_id' do
         expect(rating).to be_valid
       end
     end
-    context 'when a rating is invalid' do 
+    context 'when a rating is invalid' do
       let(:rating) { FactoryBot.build(:rating) }
       it 'should have a score' do
         rating.score = nil
         expect(rating).to_not be_valid
       end
-      it 'should have a score within range' do 
+      it 'should have a score within range' do
         rating.score = 0
         expect(rating).to_not be_valid
         rating.score = 16
         expect(rating).to_not be_valid
       end
-      it 'should have a movie_id' do 
+      it 'should have a movie_id' do
         rating.movie_id = nil
         expect(rating).to_not be_valid
       end
@@ -40,8 +40,6 @@ RSpec.describe 'Ratings model', type: :controller do
         rating.user_id = nil
         expect(rating).to_not be_valid
       end
-     
-    end  
-  end  
-
+    end
+  end
 end
