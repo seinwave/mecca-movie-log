@@ -21,7 +21,7 @@ doubled_movie = FactoryBot.create(:movie, title: 'Die Hard')
 2.times { FactoryBot.create(:rating, movie_id: doubled_movie.id, user_id: reba.id, watched_date: '2024-01-10') }
 
 # we watch movies alone sometimes
-FactoryBot.create(:rating, user_id: reba.id, movie_id: orphaned_movie.id) 
+FactoryBot.create(:rating, user_id: reba.id, movie_id: orphaned_movie.id)
 
 # most of the time, we watch movies together
 together_movies = FactoryBot.create_list(:movie, 10)
