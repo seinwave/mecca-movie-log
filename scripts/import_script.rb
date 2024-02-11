@@ -62,13 +62,11 @@ class MovieImporter
   end
 
   def import_data(dir_path)
-    puts Dir.pwd
-    puts Dir.entries('.')
-     files = Dir.entries(dir_path)
-     files.each do |file| 
-        import_movies("#{dir_path}/#{file}") if file.include?('.csv')
-        import_ratings("#{dir_path}/#{file}") if file.include?('.csv')
-      end
+    files = Dir.entries(dir_path)
+    files.each do |file|
+      import_movies("#{dir_path}/#{file}") if file.include?('.csv')
+      import_ratings("#{dir_path}/#{file}") if file.include?('.csv')
+    end
   end
 
   def import_movies(file_path)
