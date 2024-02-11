@@ -3,6 +3,5 @@
 class StaticPagesController < ApplicationController
   include RatingsHelper
 
-  def stats
-  end
+  def stats; end
 end

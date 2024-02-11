@@ -104,31 +104,27 @@ class MovieImporter
       end
 
       # create a rating for Reba, user_id: 1
-      unless has_existing_rating?(1, movie.id)
-        reba_score = LETTER_GRADES[row['REBA']]
-        puts 'creating rating for Reba'
-        reba = User.where(first_name: 'Rebecca').first
-        puts 'reba:', reba
-        reba_rating = Rating.new(user_id: reba.id, movie_id: movie.id, watched_date: date, score: reba_score)
-        unless reba_rating.valid?
-          puts 'reba_rating is invalid'
-          next
-        end
-        reba_rating.save
+      reba_score = LETTER_GRADES[row['REBA']]
+      puts 'creating rating for Reba'
+      reba = User.where(first_name: 'Rebecca').first
+      puts 'reba:', reba
+      reba_rating = Rating.new(user_id: reba.id, movie_id: movie.id, watched_date: date, score: reba_score)
+      unless reba_rating.valid?
+        puts 'reba_rating is invalid'
+        next
       end
+      reba_rating.save
 
       # create a rating for Matt, user_id: 2
-      unless has_existing_rating?(2, movie.id)
-        matt_score = LETTER_GRADES[row['MATT']]
-        puts 'creating rating for Matt'
-        matt = User.where(first_name: 'Matt').first
-        matt_rating = Rating.new(user_id: matt.id, movie_id: movie.id, watched_date: date, score: matt_score)
-        unless matt_rating.valid?
-          puts 'matt_rating is invalid'
-          next
-        end
-        matt_rating.save
+      matt_score = LETTER_GRADES[row['MATT']]
+      puts 'creating rating for Matt'
+      matt = User.where(first_name: 'Matt').first
+      matt_rating = Rating.new(user_id: matt.id, movie_id: movie.id, watched_date: date, score: matt_score)
+      unless matt_rating.valid?
+        puts 'matt_rating is invalid'
+        next
       end
+      matt_rating.save
     end
   end
 end
