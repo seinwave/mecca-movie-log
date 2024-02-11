@@ -12,26 +12,24 @@ require 'factory_bot'
 
 Dir[Rails.root.join('spec/factories/**/*.rb')].each { |f| require f }
 
-
-matt = FactoryBot.create(:user, first_name: 'Matt', last_name: 'Seidholz' )
+matt = FactoryBot.create(:user, first_name: 'Matt', last_name: 'Seidholz')
 reba = FactoryBot.create(:user, first_name: 'Rebecca', last_name: 'Brammer-Shlay')
 
 orphaned_movie = FactoryBot.create(:movie, title: 'Saltburn')
 doubled_movie = FactoryBot.create(:movie, title: 'Die Hard')
 
 # we watch multiple movies sometimes
-2.times { FactoryBot.create(:rating, movie_id: doubled_movie.id, user_id: matt.id)}
-2.times { FactoryBot.create(:rating, movie_id: doubled_movie.id, user_id: reba.id)}
+2.times { FactoryBot.create(:rating, movie_id: doubled_movie.id, user_id: matt.id) }
+2.times { FactoryBot.create(:rating, movie_id: doubled_movie.id, user_id: reba.id) }
 
 # we watch movies alone sometimes
 1.time { FactoryBot.create(:rating, user_id: reba.id, movie_id: orphaned_movie.id) }
 
 # most of the time, we watch movies together
-10.times do | n |
-  FactoryBot.create(:ratings, user_id: reba_id, movie_id: n+1 )
-end 
+10.times do |n|
+  FactoryBot.create(:ratings, user_id: reba_id, movie_id: n + 1)
+end
 
-10.times do | n |
-  FactoryBot.create(:ratings, user_id: matt_id, movie_id: n+1 )
-end 
-
+10.times do |n|
+  FactoryBot.create(:ratings, user_id: matt_id, movie_id: n + 1)
+end
