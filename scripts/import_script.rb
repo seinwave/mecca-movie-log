@@ -61,9 +61,14 @@ class MovieImporter
     @current_year = nil
   end
 
-  def import_data(file_path)
-    import_movies(file_path)
-    import_ratings(file_path)
+  def import_data(dir_path)
+    puts Dir.pwd
+    puts Dir.entries('.')
+     files = Dir.entries(dir_path)
+     files.each do |file| 
+        import_movies("#{dir_path}/#{file}") if file.include?('.csv')
+        import_ratings("#{dir_path}/#{file}") if file.include?('.csv')
+      end
   end
 
   def import_movies(file_path)
@@ -164,4 +169,4 @@ end
 
 importer = MovieImporter.new
 
-importer.import_data(ARGV[0])
+importer.import_data('movie-csvs')
