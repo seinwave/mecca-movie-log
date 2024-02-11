@@ -4,9 +4,9 @@
     | group | %>
     <h3><%= group[:title] %></h3>
     <li>
-      <% group[:ratings].each do | rating | %> <%= "Matt: #{rating.score}" if
-      rating.user_id == 1 %> <%= "Rebecca: #{rating.score}" if rating.user_id ==
-      2 %> <% end %>
+      <% group[:ratings].each do | rating | %> <%= "Rebecca:
+      #{render_rating(rating)}" if rating.user_id == 1 %> <%= "Matt:
+      #{render_rating(rating)}" if rating.user_id == 2 %> <% end %>
     </li>
     <% end %>
   </ul>

@@ -28,8 +28,6 @@ together_movies = FactoryBot.create_list(:movie, 10)
 
 together_movies.each_with_index do |movie, n|
   FactoryBot.create(:rating, user_id: reba.id, movie_id: movie.id, watched_date: "2024-01-#{11 + n}")
-end
 
-together_movies.each_with_index do |movie, n|
   FactoryBot.create(:rating, user_id: reba.id, movie_id: movie.id, watched_date: "2024-01-#{11 + n}")
 end

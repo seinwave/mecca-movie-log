@@ -28,6 +28,12 @@ module RatingsHelper
 
   def group_ratings_by_movie(ratings)
     groups = ratings.group_by(&:movie_id).values
-    groups.map { |group| { title: group[0].movie.title, ratings: group } }
+    groups.map do |group|
+      { title: group[0].movie.title, matt_rating: group.select do |item|
+                                                    item[:user_id] == 2
+                                                  end.first, reba_rating: group.select do |item|
+                                                                            item[:user_id] == 1
+                                                                          end.first }
+    end
   end
 end

@@ -6,6 +6,7 @@ require 'faker'
 
 FactoryBot.define do
   factory :rating do
+    id { Faker::Number.number(digits: 10) }
     watched_date { Faker::Date.between(from: '2019-01-01', to: '2024-01-01') }
     score { 5 }
     association :user, factory: :user
