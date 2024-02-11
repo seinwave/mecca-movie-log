@@ -27,6 +27,7 @@ module RatingsHelper
   end
 
   def group_ratings_by_movie(ratings)
-    ratings.group_by(&:movie_id).values
+    groups = ratings.group_by(&:movie_id).values
+    groups.map { |group| { title: group[0].movie.title, ratings: group } }
   end
 end
