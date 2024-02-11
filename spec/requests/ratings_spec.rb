@@ -17,7 +17,7 @@ RSpec.describe 'Ratings', type: :request do
         expect(response).to render_template(:index)
       end
 
-      it 'should render a list of ratings' do
+      it 'should render a sorted list of ratings' do
         get '/ratings'
         expect(response.body).to include('Ratings')
       end
