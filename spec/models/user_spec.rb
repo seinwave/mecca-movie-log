@@ -16,7 +16,7 @@ RSpec.describe 'User model', type: :model do
         user.first_name = nil
         expect(user).to_not be_valid
       end
-       it 'should have a last_name' do
+      it 'should have a last_name' do
         user.last_name = nil
         expect(user).to_not be_valid
       end
