@@ -1,1 +1,11 @@
-<div>Rating row</div>
+<div>
+  <ul>
+    <% ratings.each do |rating| %>
+    <h3><%= rating.movie.title %></h3>
+    <li>
+      <%= "Matt: #{rating.score}" if rating.user_id == 1 %> <%= "Rebecca:
+      #{rating.score}" if rating.user_id == 2 %>
+    </li>
+    <% end %>
+  </ul>
+</div>
