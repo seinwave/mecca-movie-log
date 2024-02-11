@@ -1,8 +1,8 @@
-# TKTK
+# frozen_string_literal: true
 
 require 'rails_helper'
 
-RSpec.describe 'Ratings model', type: :controller do
+RSpec.describe 'Ratings model', type: :model do
   describe 'scopes' do
     context 'when .grouped_and_sorted_by_date' do
       it 'sorts paired and orphaned ratings by watched_date' do

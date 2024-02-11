@@ -2,9 +2,11 @@
 
 # spec/factories/users.rb
 
+require 'faker'
+
 FactoryBot.define do
   factory :user do
-    sequence(:first_name) { |n| "User#{n}" }
-    sequence(:last_name) { |n| "Last#{n}" }
+    first_name { Faker::Name.first_name }
+    last_name { Faker::Name.last_name }
   end
 end
