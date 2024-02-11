@@ -23,5 +23,4 @@ RSpec.describe 'Ratings', type: :request do
       end
     end
   end
-
 end

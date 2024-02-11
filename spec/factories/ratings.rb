@@ -13,9 +13,9 @@ FactoryBot.define do
     factory :rating_with_same_date do
       watched_date { '2020-01-24' }
     end
-    factory :rating_with_same_movie_and_same_date do 
+    factory :rating_with_same_movie_and_same_date do
       watched_date { '2020-01-24' }
       association :movie, factory: :movie
-    end 
+    end
   end
 end
