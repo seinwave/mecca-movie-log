@@ -29,6 +29,4 @@ module RatingsHelper
   def group_ratings_by_movie(ratings)
     ratings.group_by(&:movie_id).values
   end
-
-
 end
