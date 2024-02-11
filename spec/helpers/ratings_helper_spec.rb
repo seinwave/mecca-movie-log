@@ -4,7 +4,6 @@ require 'rails_helper'
 
 RSpec.describe RatingsHelper, type: :helper do
   describe 'utility methods' do
-
     let(:ratings) { FactoryBot.create_list(:rating, 5) }
 
     context 'when rendering scores' do
@@ -13,6 +12,5 @@ RSpec.describe RatingsHelper, type: :helper do
         expect(result).to eq('D')
       end
     end
-
   end
 end

@@ -27,5 +27,4 @@ module RatingsHelper
     score = score.round
     SCORE_TO_LETTER_GRADE[score]
   end
-
 end
