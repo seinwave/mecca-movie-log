@@ -22,7 +22,7 @@ module RatingsHelper
 
   def render_rating(rating)
     return "Hasn't seen" if rating.nil?
-    
+
     score = rating.score
     score = score.round
     SCORE_TO_LETTER_GRADE[score]

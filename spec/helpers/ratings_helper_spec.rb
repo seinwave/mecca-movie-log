@@ -15,10 +15,10 @@ RSpec.describe RatingsHelper, type: :helper do
         expect(result).to eq('D')
       end
 
-      it 'reports that a user hasnt seen a movie' do 
+      it 'reports that a user hasnt seen a movie' do
         result = helper.render_rating(nil)
         expect(result).to eq("Hasn't seen")
-      end 
+      end
 
       it 'groups ratings by movie' do
         result = helper.group_ratings_by_movie([rating1, rating2, rating3, rating4])
