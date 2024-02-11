@@ -21,10 +21,14 @@ module RatingsHelper
   }.freeze
 
   def render_rating(rating)
-    return "#{rating.user.first_name} didn't watch it." if rating.nil?
-
     score = rating.score
     score = score.round
     SCORE_TO_LETTER_GRADE[score]
   end
+
+  def group_ratings_by_movie(ratings)
+    ratings.group_by(&:movie_id).values
+  end
+
+
 end
