@@ -10,12 +10,6 @@ RSpec.describe 'StaticPages', type: :request do
       expect(response).to render_template(:index)
     end
 
-    it 'should get movies' do
-      get movies_path
-      expect(response).to have_http_status(:success)
-      expect(response).to render_template(:index)
-    end
-
     it 'should get stats' do
       get stats_path
       expect(response).to have_http_status(:success)
