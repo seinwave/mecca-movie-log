@@ -140,6 +140,9 @@ def import_all_years(dir_path)
   end
 end
 
-importer = MovieImporter.new
 
-importer.import_ratings(ARGV[0])
+#import_movies(ARGV[0])
+
+ importer = MovieImporter.new
+
+ importer.import_ratings(ARGV[0])

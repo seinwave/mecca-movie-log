@@ -40,6 +40,10 @@ RSpec.describe 'Ratings model', type: :model do
         rating.user_id = nil
         expect(rating).to_not be_valid
       end
+      it 'should have a valid watched_date' do
+        rating.watched_date = nil
+        expect(rating).to_not be_valid
+      end
     end
   end
 end
