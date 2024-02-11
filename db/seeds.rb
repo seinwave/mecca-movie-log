@@ -8,18 +8,30 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Movie.create(title: 'Brave')
-Movie.create(title: 'Mandy')
-Movie.create(title: 'The Shining')
-Movie.create(title: 'The Thing')
+require 'factory_bot'
 
-User.create(first_name: 'Matt', last_name: 'Seidholz')
-User.create(first_name: 'Rebecca', last_name: 'Brammer-Shlay')
+Dir[Rails.root.join('spec/factories/**/*.rb')].each { |f| require f }
 
-Rating.create(watched_date: '2022-01-01', score: 5, user_id: 1, movie_id: 1)
-Rating.create(watched_date: '2023-01-01', score: 5, user_id: 1, movie_id: 2)
-Rating.create(watched_date: '2024-01-01', score: 5, user_id: 1, movie_id: 3)
 
-Rating.create(watched_date: '2022-01-01', score: 5, user_id: 2, movie_id: 1)
-Rating.create(watched_date: '2023-01-01', score: 5, user_id: 2, movie_id: 2)
-Rating.create(watched_date: '2024-01-01', score: 5, user_id: 2, movie_id: 3)
+matt = FactoryBot.create(:user, first_name: 'Matt', last_name: 'Seidholz' )
+reba = FactoryBot.create(:user, first_name: 'Rebecca', last_name: 'Brammer-Shlay')
+
+orphaned_movie = FactoryBot.create(:movie, title: 'Saltburn')
+doubled_movie = FactoryBot.create(:movie, title: 'Die Hard')
+
+# we watch multiple movies sometimes
+2.times { FactoryBot.create(:rating, movie_id: doubled_movie.id, user_id: matt.id)}
+2.times { FactoryBot.create(:rating, movie_id: doubled_movie.id, user_id: reba.id)}
+
+# we watch movies alone sometimes
+1.time { FactoryBot.create(:rating, user_id: reba.id, movie_id: orphaned_movie.id) }
+
+# most of the time, we watch movies together
+10.times do | n |
+  FactoryBot.create(:ratings, user_id: reba_id, movie_id: n+1 )
+end 
+
+10.times do | n |
+  FactoryBot.create(:ratings, user_id: matt_id, movie_id: n+1 )
+end 
+

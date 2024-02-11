@@ -25,6 +25,7 @@ RSpec.describe 'Ratings', type: :request do
   end
 
   describe 'Arrange ratings' do
+    let(:ratings) {FactoryBot.create_list(:ratings, 5)}
     context 'when sorting ratings' do
       before do
         @sorted_ratings = controller_instance.send(:sort_rating_sets_by_date)
