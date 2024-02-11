@@ -19,7 +19,7 @@ RSpec.describe 'Ratings', type: :request do
 
       it 'should render a sorted list of ratings' do
         get '/ratings'
-        expect(response.body).to include('Ratings')
+        expect(response.body).to include('Reba')
       end
     end
   end
