@@ -4,53 +4,28 @@ require 'rails_helper'
 
 RSpec.describe RatingsHelper, type: :helper do
   describe 'utility methods' do
-    it 'converts a rating to a letter grade' do
-      result = helper.convert_to_letter_grade(ratings(:reba_brave))
-      expect(result).to eq('D+')
-    end
+    context 'when rendering scores' do
+      let(:rating1) { FactoryBot.build(:rating, movie_id: 5, user_id: 1) }
+      let(:rating2) { FactoryBot.build(:rating, movie_id: 5, user_id: 2) }
+      let(:rating3) { FactoryBot.build(:rating, movie_id: 6, user_id: 1) }
+      let(:rating4) { FactoryBot.build(:rating, movie_id: 6, user_id: 2) }
 
-    it 'converts a numerical score to a letter grade' do
-      result = helper.convert_score_to_letter_grade(8.3)
-      expect(result).to eq('C')
-    end
+      it 'converts a rating to a letter grade' do
+        result = helper.render_rating(rating1)
+        expect(result).to eq('D')
+      end
 
-    it 'gets ratings for a movie, from a particular user' do
-      result = helper.get_ratings(users(:reba), movies(:brave))
-      expect(result[0].score).to eq(6)
-    end
+      it 'reports that a user hasnt seen a movie' do
+        result = helper.render_rating(nil)
+        expect(result).to eq("Hasn't seen")
+      end
 
-    it 'gets ratings for a movie, from all' do
-      result = helper.get_ratings(nil, movies(:brave))
-      expect(result[0].score).to eq(6)
-      expect(result[1].score).to eq(9)
-    end
+      it 'groups ratings by movie' do
+        result = helper.group_ratings_by_movie([rating1, rating2, rating3, rating4])
 
-    it 'calculates a running average rating, for one user' do
-      result = helper.running_average([users(:reba)])
-      expect(result).to eq(8)
-    end
-
-    it 'calculates a running average rating, multiple users' do
-      result = helper.running_average([users(:reba), users(:matt)])
-      expect(result).to eq(8.3)
-    end
-
-    it 'finds the movies with the highest average ratings' do
-      result = helper.highest_rated_movies(1)
-      expect(result[0].title).to eq('Hoop Dreams')
-      expect(result.length).to eq(1)
-    end
-
-    it 'returns the highest rated movies titles, with matt and rebas respective scores' do
-      result = helper.highest_rated_movies_with_scores(1)
-      expect(result[0].title).to eq('Hoop Dreams')
-      expect(result[0].matt_score).to eq('B-')
-      expect(result[0].reba_score).to eq('B-')
-    end
-
-    it 'finds the movie where matt and reba disagree the most on the score' do
-      result = helper.biggest_divergence
-      expect(result.title).to eq('Brave')
+        expect(result).to eq([{ title: rating1.movie.title, matt_rating: rating2, reba_rating: rating1 },
+                              { title: rating3.movie.title, matt_rating: rating4, reba_rating: rating3 }])
+      end
     end
   end
 end

@@ -1,25 +1,3 @@
 <div>
   <h1>Stats</h1>
-  <h2>Unique Movies</h2>
-  <div><%= @count %></div>
-  <h2>Combined average grade</h2>
-  <div><%= @combined_average %></div>
-  <h2>Reba's average grade</h2>
-  <div><%= @reba_average %></div>
-  <h2>Matt's average grade</h2>
-  <div><%= @matt_average %></div>
-  <h2>The Household's Favorite Movies</h2>
-  <div>
-    <% @household_favorites.each do |movie| %>
-    <div><%= movie.title %></div>
-    <p>Matt: <%= movie.matt_score%></p>
-    <p>Reba: <%= movie.reba_score%></p>
-    <% end %>
-    <h2>Biggest disagreement</h2>
-    <div><%= @biggest_divergence.title %></div>
-    <div>
-      Matt: <%= @matt_score_on_divergence %> Reba: <%= @reba_score_on_divergence
-      %>
-    </div>
-  </div>
 </div>

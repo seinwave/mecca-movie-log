@@ -1,0 +1,8 @@
+<% current_year = nil %> <% current_month = nil %> <% @ratings.each do |date,
+ratings| %> <% if date.year != current_year %>
+<h2><%= date.year %></h2>
+<% current_year = date.year %> <% current_month = nil %> <% end %> <% if
+date.month != current_month %>
+<h3><%= date.strftime("%B") %></h3>
+<% current_month = date.month %> <% end %> <%= render partial: 'ratings_row',
+locals: { date: date, ratings: ratings } %> <% end %>

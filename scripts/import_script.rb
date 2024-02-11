@@ -61,6 +61,31 @@ class MovieImporter
     @current_year = nil
   end
 
+  def import_data(dir_path)
+    files = Dir.entries(dir_path)
+    files.each do |file|
+      import_movies("#{dir_path}/#{file}") if file.include?('.csv')
+      import_ratings("#{dir_path}/#{file}") if file.include?('.csv')
+    end
+  end
+
+  def import_movies(file_path)
+    file_path = File.expand_path(file_path)
+
+    puts "importing movies from #{file_path}!"
+    CSV.foreach(file_path, headers: true) do |row|
+      # Skip if the row is empty or the title is empty
+      puts 'ROW!', row['TITLE']
+      next unless is_valid_title?(row['TITLE'])
+
+      puts "importing #{row['TITLE']}"
+
+      # Insert movie if it doesn't exist
+      movie_title = row['TITLE']
+      Movie.find_or_create_by(title: movie_title)
+    end
+  end
+
   def has_existing_rating?(user_id, movie_id)
     Rating.find_by(user_id:, movie_id:)
   end
@@ -104,31 +129,27 @@ class MovieImporter
       end
 
       # create a rating for Reba, user_id: 1
-      unless has_existing_rating?(1, movie.id)
-        reba_score = LETTER_GRADES[row['REBA']]
-        puts 'creating rating for Reba'
-        reba = User.where(first_name: 'Rebecca').first
-        puts 'reba:', reba
-        reba_rating = Rating.new(user_id: reba.id, movie_id: movie.id, watched_date: date, score: reba_score)
-        unless reba_rating.valid?
-          puts 'reba_rating is invalid'
-          next
-        end
-        reba_rating.save
+      reba_score = LETTER_GRADES[row['REBA']]
+      puts 'creating rating for Reba'
+      reba = User.where(first_name: 'Rebecca').first
+      puts 'reba:', reba
+      reba_rating = Rating.new(user_id: reba.id, movie_id: movie.id, watched_date: date, score: reba_score)
+      unless reba_rating.valid?
+        puts 'reba_rating is invalid'
+        next
       end
+      reba_rating.save
 
       # create a rating for Matt, user_id: 2
-      unless has_existing_rating?(2, movie.id)
-        matt_score = LETTER_GRADES[row['MATT']]
-        puts 'creating rating for Matt'
-        matt = User.where(first_name: 'Matt').first
-        matt_rating = Rating.new(user_id: matt.id, movie_id: movie.id, watched_date: date, score: matt_score)
-        unless matt_rating.valid?
-          puts 'matt_rating is invalid'
-          next
-        end
-        matt_rating.save
+      matt_score = LETTER_GRADES[row['MATT']]
+      puts 'creating rating for Matt'
+      matt = User.where(first_name: 'Matt').first
+      matt_rating = Rating.new(user_id: matt.id, movie_id: movie.id, watched_date: date, score: matt_score)
+      unless matt_rating.valid?
+        puts 'matt_rating is invalid'
+        next
       end
+      matt_rating.save
     end
   end
 end
@@ -146,4 +167,4 @@ end
 
 importer = MovieImporter.new
 
-importer.import_ratings(ARGV[0])
+importer.import_data('movie-csvs')
