@@ -29,6 +29,7 @@ module RatingsHelper
   end
 
   def group_ratings_by_movie(ratings)
+    # TODO: extract these to constants
     matt = User.find_by(first_name: 'Matt')
     reba = User.find_by(first_name: 'Rebecca')
     groups = ratings.group_by(&:movie_id).values
