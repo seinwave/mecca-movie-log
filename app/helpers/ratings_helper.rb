@@ -30,7 +30,7 @@ module RatingsHelper
 
   def group_ratings_by_movie(ratings)
     matt = User.find_by(first_name: 'Matt')
-    reba = User.find_by(first_name: 'Reba')
+    reba = User.find_by(first_name: 'Rebecca')
     groups = ratings.group_by(&:movie_id).values
     groups.map do |group|
       { title: group[0].movie.title, matt_rating: group.select do |item|
