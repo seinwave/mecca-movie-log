@@ -9,12 +9,13 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 require 'factory_bot'
+require 'faker'
 
 matt = FactoryBot.create(:user, first_name: 'Matt', last_name: 'Seidholz')
 reba = FactoryBot.create(:user, first_name: 'Rebecca', last_name: 'Brammer-Shlay')
 
-orphaned_movie = FactoryBot.create(:movie, title: 'Saltburn')
-doubled_movie = FactoryBot.create(:movie, title: 'Die Hard')
+orphaned_movie = FactoryBot.create(:movie, title: Faker::Movie.title)
+doubled_movie = FactoryBot.create(:movie, title: Faker::Movie.title)
 
 # somtimes, we watch movies multiple times
 2.times { FactoryBot.create(:rating, movie_id: doubled_movie.id, user_id: matt.id, watched_date: '2024-01-10') }

@@ -28,16 +28,13 @@ module RatingsHelper
     SCORE_TO_LETTER_GRADE[score]
   end
 
-  def group_ratings_by_movie(ratings)
-    # TODO: extract these to constants
-    matt = User.find_by(first_name: 'Matt')
-    reba = User.find_by(first_name: 'Rebecca')
+  def group_ratings_by_movie(ratings)  
     groups = ratings.group_by(&:movie_id).values
     groups.map do |group|
       { title: group[0].movie.title, matt_rating: group.select do |item|
-                                                    item[:user_id] == matt.id
+                                                    item[:user_id] == @matt.id
                                                   end.first, reba_rating: group.select do |item|
-                                                                            item[:user_id] == reba.id
+                                                                            item[:user_id] == @reba.id
                                                                           end.first }
     end
   end
