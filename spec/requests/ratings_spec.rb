@@ -27,22 +27,23 @@ RSpec.describe 'Ratings', type: :request do
   describe 'POST /rating' do
     let(:user) { User.first }
     let(:movie) { Movie.first }
-    let(:rating) { { user_id: user.id, movie_id: movie.id, score: 11, watched_date: '2024-02-02' } }
+    let(:valid_rating) { { user_id: user.id, movie_id: movie.id, score: 11, watched_date: Date.today } }
     context 'when rating is successfully recorded' do
-      before do
-        post add_rating_path, params: { rating: {user_id: rating[:user_id], movie_id: rating[:movie_id], score: rating[:score], watched_date: rating[:watched_date] }}
+      it 'should create a new Rating' do
+        expect {
+          post add_rating_path, params: { rating: valid_rating }
+        }.to change(Rating, :count).by(1)
       end
       it 'shoud respond with a 302 (redirect)' do
+        post add_rating_path, params: { rating: valid_rating }
         expect(response).to have_http_status(302)
       end
-      # it 'should return the new rating id' do
-      #   expect(JSON.parse(response.body)).to include({'id' => 2})
-      # end
       it 'should flash with a sucess message' do
+        post add_rating_path, params: { rating: valid_rating }
         expect(flash[:success]).not_to be_nil
       end
-
       it 'should render the ratings list, with the new rating included' do
+        post add_rating_path, params: { rating: valid_rating }
         expect(response).to redirect_to(ratings_path)
       end
     end
