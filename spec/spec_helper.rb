@@ -27,7 +27,7 @@ RSpec.configure do |config|
 
   config.after(:suite) do
     DatabaseCleaner.clean_with(:truncation) # clean up the test db
-  end 
+  end
 
   config.filter_gems_from_backtrace 'rspec-rails', 'factory_bot'
 
