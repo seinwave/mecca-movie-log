@@ -2,12 +2,12 @@
 
 module ApplicationHelper
   module RatingsHelper
-  def matt
-    @matt ||= User.find_by(name: 'Matt')
-  end
+    def matt
+      @matt ||= User.find_by(name: 'Matt')
+    end
 
-  def rebecca
-    @rebecca ||= User.find_by(name: 'Rebecca')
+    def rebecca
+      @rebecca ||= User.find_by(name: 'Rebecca')
+    end
   end
-end
 end
