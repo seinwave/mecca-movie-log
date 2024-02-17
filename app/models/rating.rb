@@ -2,6 +2,7 @@
 
 class Rating < ApplicationRecord
   belongs_to :movie
+  accepts_nested_attributes_for :movie
   belongs_to :user
 
   scope :grouped_and_sorted_by_date, -> { all.group_by(&:watched_date).sort_by { |date, _ratings| date }.reverse }

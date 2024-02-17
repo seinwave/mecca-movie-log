@@ -13,6 +13,12 @@
 </div>
 
 <div class="field">
+  <%= f.label :new_movie, 'New Movie?' %> <%= f.fields_for :movie, id:
+  'new-movie-form' do |movie_fields| %> <%= movie_fields.label :title %> <%=
+  movie_fields.text_field :title %> <% end %>
+</div>
+
+<div class="field">
   <%= f.label :movie_id %><br />
   <%= f.collection_select(:movie_id, Movie.all, :id, :title) %>
 </div>
