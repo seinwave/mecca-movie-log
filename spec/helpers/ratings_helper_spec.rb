@@ -25,7 +25,6 @@ RSpec.describe RatingsHelper, type: :helper do
       it 'groups ratings by movie and user' do
         result = helper.group_ratings_by_movie([rating1, rating2, rating3, rating4], matt, reba)
 
-
         expect(result).to eq([{ title: rating1.movie.title, user1_rating: rating1, user2_rating: rating2 },
                               { title: rating3.movie.title, user1_rating: rating3, user2_rating: rating4 }])
       end
