@@ -3,15 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe 'User model', type: :model do
+  let(:user) { FactoryBot.build(:user) }
   describe 'validations' do
     context 'when a user is valid' do
-      let(:user) { FactoryBot.build(:user) }
       it 'should have first and last name' do
         expect(user).to be_valid
       end
     end
     context 'when a user is invalid' do
-      let(:user) { FactoryBot.build(:user) }
       it 'should have a first_name' do
         user.first_name = nil
         expect(user).to_not be_valid
