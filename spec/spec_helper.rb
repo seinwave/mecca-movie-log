@@ -25,6 +25,10 @@ RSpec.configure do |config|
     Rails.application.load_seed # loading seeds
   end
 
+  config.after(:suite) do
+    DatabaseCleaner.clean_with(:truncation) # clean up the test db
+  end 
+
   config.filter_gems_from_backtrace 'rspec-rails', 'factory_bot'
 
   config.expect_with :rspec do |expectations|

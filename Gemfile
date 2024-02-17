@@ -15,6 +15,7 @@ gem 'rails-controller-testing'
 gem 'rspec-rails', '~> 6.0.2'
 group :development, :test do
   gem 'factory_bot_rails'
+  gem 'database_cleaner-active_record'
 end
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
