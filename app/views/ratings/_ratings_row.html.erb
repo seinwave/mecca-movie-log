@@ -1,7 +1,7 @@
 <div>
   <ul>
-    <% movie_groups = group_ratings_by_movie(ratings) %> <% movie_groups.each do
-    | group | %>
+    <% movie_groups = group_ratings_by_movie(ratings, @rebecca, @matt) %> <%
+    movie_groups.each do | group | %>
     <h3><%= group[:title] %></h3>
     <li>
       <%= "Rebecca: #{render_rating(group[:reba_rating])}" %> <%= "Matt:
