@@ -1,7 +1,7 @@
 <%= form_for(@rating) do |f| %>
 
 <div data-controller="rating-form">
-  <%= button_to 'Add a new movie', '#', method: :post, data: { action:
+  <%= button_to 'Add a new movie', '#', data: { action:
   'click->rating-form#toggle_movie_form', 'rating-form-target':'toggleButton' }
   %>
 
