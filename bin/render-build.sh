@@ -2,7 +2,7 @@
 # exit on error
 set -o errexit
 
-yarn install
 bundle install
+yarn install
 ./bin/rails assets:precompile
 ./bin/rails assets:clean
