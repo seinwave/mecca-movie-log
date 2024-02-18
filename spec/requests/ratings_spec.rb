@@ -91,7 +91,7 @@ RSpec.describe 'Ratings', type: :request do
       end
       it 'shoud respond with a 400 (bad request)' do
         post add_rating_path, params: { rating: invalid_rating }
-        expect(response).to have_http_status(400)
+        expect(response).to have_http_status(422)
       end
       it 'should flash with an error message' do
         post add_rating_path, params: { rating: invalid_rating }
@@ -99,7 +99,37 @@ RSpec.describe 'Ratings', type: :request do
       end
       it 'should not redirect' do
         post add_rating_path, params: { rating: invalid_rating }
-        expect(response).not_to redirect_to(ratings_path)
+        expect(response).to have_http_status(422)
+        expect(response).to render_template(:index)
+      end
+    end
+
+    context 'when rating a movie in the future' do
+      let(:user) { User.first }
+      let(:movie) { Movie.first }
+      let(:invalid_rating) { { user_id: user.id, score: 11, watched_date: Date.today + 3.days } }
+      it 'should not create a new Rating' do
+        expect do
+          post add_rating_path, params: { rating: invalid_rating }
+        end.not_to change(Rating, :count)
+      end
+      it 'should not create a new Movie' do
+        expect do
+          post add_rating_path, params: { rating: invalid_rating }
+        end.not_to change(Rating, :count)
+      end
+      it 'shoud respond with a 400 (bad request)' do
+        post add_rating_path, params: { rating: invalid_rating }
+        expect(response).to have_http_status(422)
+      end
+      it 'should flash with an error message' do
+        post add_rating_path, params: { rating: invalid_rating }
+        expect(flash[:error]).not_to be_nil
+      end
+      it 'should not redirect' do
+        post add_rating_path, params: { rating: invalid_rating }
+        expect(response).to have_http_status(422)
+        expect(response).to render_template(:index)
       end
     end
   end

@@ -2,11 +2,7 @@
 
 class RatingsController < ApplicationController
   def index
-    @ratings = Rating.grouped_and_sorted_by_date
-    @rebecca = User.find_by(first_name: 'Rebecca')
-    @matt = User.find_by(first_name: 'Matt')
-    date = Date.today.strftime('%Y/%m/%d')
-    @rating = Rating.new(watched_date: date)
+    seed_rating_page
   end
 
   def create
@@ -18,11 +14,21 @@ class RatingsController < ApplicationController
       flash[:success] = 'Rating was successfully saved'
       redirect_to ratings_path
     else
-      flash[:error] = 'There was an error recording your rating. Try again!'
+      flash.now[:error] = 'There was an error recording your rating. Try again!'
+      seed_rating_page
+      render :index, status: :unprocessable_entity
     end
   end
 
   private
+
+  def seed_rating_page
+    @ratings = Rating.grouped_and_sorted_by_date || []
+    @rebecca = User.find_by(first_name: 'Rebecca')
+    @matt = User.find_by(first_name: 'Matt')
+    date = Date.today.strftime('%Y/%m/%d')
+    @rating = Rating.new(watched_date: date)
+  end
 
   def rating_params
     params.require(:rating).permit(:score, :user_id, :movie_id, :watched_date, movie_attributes: [:title])
