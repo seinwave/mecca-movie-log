@@ -1,0 +1,40 @@
+<%= form_for(@rating) do |f| %>
+
+<div data-controller="rating-form">
+  <%= button_to 'Add a new movie', '#', method: :post, data: { action:
+  'click->rating-form#toggle_movie_form', 'rating-form-target':'toggleButton' }
+  %>
+
+  <div class="field">
+    <%= f.label :movie %><br />
+
+    <div class="hidden" data-rating-form-target="new">
+      <%= f.fields_for :movie do |movie_fields| %> <%= movie_fields.label :title
+      %> <%= movie_fields.text_field :title %> <% end %>
+    </div>
+    <div data-rating-form-target="existing">
+      <%= f.collection_select(:movie_id, Movie.all.order(:title), :id, :title)
+      %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :score %><br />
+    <%= f.select :score, options_for_select([ ['A+', 15], ['A', 14], ['A-', 13],
+    ['B+', 12], ['B', 11], ['B-', 10], ['C+', 9], ['C', 8], ['C-', 7], ['D+',
+    6], ['D', 5], ['D-', 4], ['F', 3], ['F', 2], ['F', 1] ]) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.collection_select(:user_id, User.all, :id, :first_name) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :watched_date %><br />
+    <%= f.date_select :watched_date %>
+  </div>
+
+  <div class="actions"><%= f.submit %></div>
+  <% end %>
+</div>

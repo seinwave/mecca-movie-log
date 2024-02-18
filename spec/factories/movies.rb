@@ -4,6 +4,6 @@ require 'faker'
 
 FactoryBot.define do
   factory :movie do
-    title { Faker::Movie.title }
+    sequence(:title) { |n| "Movie #{n}" }
   end
 end

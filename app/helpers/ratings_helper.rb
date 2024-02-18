@@ -20,6 +20,14 @@ module RatingsHelper
     -2000 => 'Fart Minus'
   }.freeze
 
+  def matt
+    @matt ||= User.find_by(first_name: 'Matt')
+  end
+
+  def rebecca
+    @rebecca ||= User.find_by(first_name: 'Rebecca')
+  end
+
   def render_rating(rating)
     return "Hasn't seen" if rating.nil?
 
@@ -28,17 +36,14 @@ module RatingsHelper
     SCORE_TO_LETTER_GRADE[score]
   end
 
-  def group_ratings_by_movie(ratings)
-    # TODO: extract these to constants
-    matt = User.find_by(first_name: 'Matt')
-    reba = User.find_by(first_name: 'Rebecca')
+  def group_ratings_by_movie(ratings, user1, user2)
     groups = ratings.group_by(&:movie_id).values
     groups.map do |group|
-      { title: group[0].movie.title, matt_rating: group.select do |item|
-                                                    item[:user_id] == matt.id
-                                                  end.first, reba_rating: group.select do |item|
-                                                                            item[:user_id] == reba.id
-                                                                          end.first }
+      { title: group[0].movie.title, user1_rating: group.select do |item|
+                                                     item[:user_id] == user1.id
+                                                   end.first, user2_rating: group.select do |item|
+                                                                              item[:user_id] == user2.id
+                                                                            end.first }
     end
   end
 end

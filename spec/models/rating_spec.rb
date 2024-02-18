@@ -8,7 +8,6 @@ RSpec.describe 'Ratings model', type: :model do
       it 'sorts paired and orphaned ratings by watched_date' do
         ratings = Rating.grouped_and_sorted_by_date
         expect(ratings[0][0]).to be > ratings[1][0]
-        # data structure is [watched_date, [ratings]]
       end
     end
   end
@@ -42,6 +41,10 @@ RSpec.describe 'Ratings model', type: :model do
       end
       it 'should have a valid watched_date' do
         rating.watched_date = nil
+        expect(rating).to_not be_valid
+      end
+      it 'should have a watched_date on or before today' do
+        rating.watched_date = Date.today + 3.days
         expect(rating).to_not be_valid
       end
     end

@@ -20,9 +20,19 @@ RSpec.configure do |config|
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer
 
-  # seed test db
+  # seed / clean test db before and after entire suite
   config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation) # clean up the test db
     Rails.application.load_seed # loading seeds
+  end
+
+  # clean db before a :clean-db test
+  config.before(:example, :clean_db) do |example|
+    DatabaseCleaner.clean_with(:truncation) { example.run } # clean up db before :clean_db runs
+  end
+
+  config.after(:suite) do
+    DatabaseCleaner.clean_with(:truncation) # clean up the test db
   end
 
   config.filter_gems_from_backtrace 'rspec-rails', 'factory_bot'
