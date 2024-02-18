@@ -1,9 +1,9 @@
-<!--prettier-ignore-->
 <%= form_for(@rating) do |f| %>
 
 <div data-controller="rating-form">
   <%= button_to 'Add a new movie', '#', method: :post, data: { action:
-  'click->rating-form#toggle_movie_form' } %>
+  'click->rating-form#toggle_movie_form', 'rating-form-target':'toggleButton' }
+  %>
 
   <div class="field">
     <%= f.label :movie %><br />
@@ -13,7 +13,8 @@
       %> <%= movie_fields.text_field :title %> <% end %>
     </div>
     <div data-rating-form-target="existing">
-      <%= f.collection_select(:movie_id, Movie.all, :id, :title) %>
+      <%= f.collection_select(:movie_id, Movie.all.order(:title), :id, :title)
+      %>
     </div>
   </div>
 
