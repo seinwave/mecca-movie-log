@@ -85,10 +85,10 @@ RSpec.describe 'Ratings', type: :request do
         end.not_to change(Rating, :count)
       end
       it 'should not create a new Movie' do
-         expect do
+        expect do
           post add_rating_path, params: { rating: invalid_rating }
-        end.not_to change(Rating, :count) 
-      end 
+        end.not_to change(Rating, :count)
+      end
       it 'shoud respond with a 400 (bad request)' do
         post add_rating_path, params: { rating: invalid_rating }
         expect(response).to have_http_status(400)
