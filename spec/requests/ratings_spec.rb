@@ -30,9 +30,9 @@ RSpec.describe 'Ratings', type: :request do
       let(:movie) { Movie.first }
       let(:valid_rating) { { user_id: user.id, movie_id: movie.id, score: 11, watched_date: Date.today } }
       it 'should create a new Rating' do
-        expect {
+        expect do
           post add_rating_path, params: { rating: valid_rating }
-        }.to change(Rating, :count).by(1)
+        end.to change(Rating, :count).by(1)
       end
       it 'shoud respond with a 302 (redirect)' do
         post add_rating_path, params: { rating: valid_rating }
@@ -49,16 +49,18 @@ RSpec.describe 'Ratings', type: :request do
     end
     context 'when successfully rating a new movie', :clean_db do
       let(:user) { FactoryBot.create(:user) }
-      let(:rating_with_new_movie) { { user_id: user.id, movie_attributes: { title: 'Fronkie' }, score: 11, watched_date: Date.today } }
+      let(:rating_with_new_movie) do
+        { user_id: user.id, movie_attributes: { title: 'Fronkie' }, score: 11, watched_date: Date.today }
+      end
       it 'creates a new Movie' do
-        expect {
+        expect do
           post add_rating_path, params: { rating: rating_with_new_movie }
-        }.to change(Movie, :count).by(1)
+        end.to change(Movie, :count).by(1)
       end
       it 'creates a new Rating' do
-        expect {
+        expect do
           post add_rating_path, params: { rating: rating_with_new_movie }
-        }.to change(Rating, :count).by(1)
+        end.to change(Rating, :count).by(1)
       end
       it 'shoud respond with a 302 (redirect)' do
         post add_rating_path, params: { rating: rating_with_new_movie }
@@ -71,6 +73,33 @@ RSpec.describe 'Ratings', type: :request do
       it 'should render the ratings list, with the new rating included' do
         post add_rating_path, params: { rating: rating_with_new_movie }
         expect(response).to redirect_to(ratings_path)
+      end
+    end
+    context 'when posting a rating without a movie' do
+      let(:user) { User.first }
+      let(:movie) { Movie.first }
+      let(:invalid_rating) { { user_id: user.id, score: 11, watched_date: Date.today } }
+      it 'should not create a new Rating' do
+        expect do
+          post add_rating_path, params: { rating: invalid_rating }
+        end.not_to change(Rating, :count)
+      end
+      it 'should not create a new Movie' do
+         expect do
+          post add_rating_path, params: { rating: invalid_rating }
+        end.not_to change(Rating, :count) 
+      end 
+      it 'shoud respond with a 400 (bad request)' do
+        post add_rating_path, params: { rating: invalid_rating }
+        expect(response).to have_http_status(400)
+      end
+      it 'should flash with an error message' do
+        post add_rating_path, params: { rating: invalid_rating }
+        expect(flash[:error]).not_to be_nil
+      end
+      it 'should not redirect' do
+        post add_rating_path, params: { rating: invalid_rating }
+        expect(response).not_to redirect_to(ratings_path)
       end
     end
   end

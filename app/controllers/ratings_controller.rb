@@ -5,7 +5,7 @@ class RatingsController < ApplicationController
     @ratings = Rating.grouped_and_sorted_by_date
     @rebecca = User.find_by(first_name: 'Rebecca')
     @matt = User.find_by(first_name: 'Matt')
-    date = Date.today.strftime("%Y/%m/%d")
+    date = Date.today.strftime('%Y/%m/%d')
     @rating = Rating.new(watched_date: date)
   end
 
