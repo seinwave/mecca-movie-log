@@ -32,5 +32,5 @@ class RatingsController < ApplicationController
     movie = @rating.build_movie(rating_params[:movie_attributes])
     movie.save if movie.new_record?
     @rating['movie_id'] = @rating.movie.id
-  end 
+  end
 end
