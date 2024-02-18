@@ -68,7 +68,7 @@ class MovieImporter
   def add_users
     User.create(first_name: 'Rebecca', last_name: 'Brammer-Shlay')
     User.create(first_name: 'Matt', last_name: 'Seidholz')
-  end 
+  end
 
   def import_data(dir_path)
     files = Dir.entries(dir_path)
