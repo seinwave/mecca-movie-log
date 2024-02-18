@@ -11,15 +11,20 @@ class RatingsController < ApplicationController
   end
 
   def create
-    rating_params = params.require(:rating).permit(:score, :user_id, :movie_id, :watched_date)
-
     @rating = Rating.new(rating_params)
+
 
     if @rating.save
       flash[:success] = 'Rating was successfully saved'
       redirect_to ratings_path
     else
-      render :new
+      flash[:error] = 'There was an error recording your rating. Try again!'
     end
   end
+
+  private 
+
+  def rating_params
+    params.require(:rating).permit(:score, :movie_id, :user_id, :watched_date, movie_attributes: [:title])
+  end 
 end
