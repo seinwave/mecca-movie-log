@@ -61,6 +61,15 @@ class MovieImporter
     @current_year = nil
   end
 
+  def clear_existing_data
+    DatabaseCleaner.clean_with(:truncation) # clean up the test db
+  end
+
+  def add_users
+    User.create(first_name: 'Rebecca', last_name: 'Brammer-Shlay')
+    User.create(first_name: 'Matt', last_name: 'Seidholz')
+  end 
+
   def import_data(dir_path)
     files = Dir.entries(dir_path)
     files.each do |file|
