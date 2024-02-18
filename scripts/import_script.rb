@@ -62,15 +62,12 @@ class MovieImporter
   end
 
   def clear_existing_data
-    DatabaseCleaner.clean_with(:truncation) # clean up the test db
-  end
-
-  def add_users
-    User.create(first_name: 'Rebecca', last_name: 'Brammer-Shlay')
-    User.create(first_name: 'Matt', last_name: 'Seidholz')
+    DatabaseCleaner.clean_with(:truncation, only: %w[ratings movies])
   end
 
   def import_data(dir_path)
+    clear_existing_data if Rating.count > 0 || Movie.count > 0
+    
     files = Dir.entries(dir_path)
     files.each do |file|
       import_movies("#{dir_path}/#{file}") if file.include?('.csv')
