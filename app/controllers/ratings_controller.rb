@@ -7,12 +7,12 @@ class RatingsController < ApplicationController
     @matt = User.find_by(first_name: 'Matt')
     date = Date.today.strftime("%Y/%m/%d")
     @rating = Rating.new(watched_date: date)
-    @rating.build_movie
   end
 
   def create
     @rating = Rating.new(rating_params)
 
+    create_movie if params[:rating][:movie_attributes].present?
 
     if @rating.save
       flash[:success] = 'Rating was successfully saved'
@@ -22,9 +22,15 @@ class RatingsController < ApplicationController
     end
   end
 
-  private 
+  private
 
   def rating_params
-    params.require(:rating).permit(:score, :movie_id, :user_id, :watched_date, movie_attributes: [:title])
+    params.require(:rating).permit(:score, :user_id, :movie_id, :watched_date, movie_attributes: [:title])
+  end
+
+  def create_movie
+    movie = @rating.build_movie(rating_params[:movie_attributes])
+    movie.save if movie.new_record?
+    @rating['movie_id'] = @rating.movie.id
   end 
 end

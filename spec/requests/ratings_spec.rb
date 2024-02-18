@@ -47,29 +47,29 @@ RSpec.describe 'Ratings', type: :request do
         expect(response).to redirect_to(ratings_path)
       end
     end
-    context 'when successfully rating a new movie' do
-      let(:user) { User.first }
-      let(:valid_rating) { { user_id: user.id, movie_attributes: {title: 'Fronkie'}, score: 11, watched_date: Date.today } }
-      it 'creates a new Movie' do 
-        expect { 
-          post add_rating_path, params: {rating: valid_rating}
-        }. to change(Movie, :count).by(1)
-      end 
+    context 'when successfully rating a new movie', :clean_db do
+      let(:user) { FactoryBot.create(:user) }
+      let(:rating_with_new_movie) { { user_id: user.id, movie_attributes: { title: 'Fronkie' }, score: 11, watched_date: Date.today } }
+      it 'creates a new Movie' do
+        expect {
+          post add_rating_path, params: { rating: rating_with_new_movie }
+        }.to change(Movie, :count).by(1)
+      end
       it 'creates a new Rating' do
         expect {
-          post add_rating_path, params: { rating: valid_rating }
+          post add_rating_path, params: { rating: rating_with_new_movie }
         }.to change(Rating, :count).by(1)
       end
       it 'shoud respond with a 302 (redirect)' do
-        post add_rating_path, params: { rating: valid_rating }
+        post add_rating_path, params: { rating: rating_with_new_movie }
         expect(response).to have_http_status(302)
       end
       it 'should flash with a sucess message' do
-        post add_rating_path, params: { rating: valid_rating }
+        post add_rating_path, params: { rating: rating_with_new_movie }
         expect(flash[:success]).not_to be_nil
       end
       it 'should render the ratings list, with the new rating included' do
-        post add_rating_path, params: { rating: valid_rating }
+        post add_rating_path, params: { rating: rating_with_new_movie }
         expect(response).to redirect_to(ratings_path)
       end
     end
