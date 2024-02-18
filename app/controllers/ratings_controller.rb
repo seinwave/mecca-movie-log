@@ -28,6 +28,7 @@ class RatingsController < ApplicationController
     @matt = User.find_by(first_name: 'Matt')
     date = Date.today.strftime('%Y/%m/%d')
     @rating = Rating.new(watched_date: date)
+    @rating.build_movie
   end
 
   def rating_params

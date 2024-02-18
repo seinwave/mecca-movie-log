@@ -1,6 +1,22 @@
+<!--prettier-ignore-->
 <%= form_for(@rating) do |f| %>
 
 <div data-controller="rating-form">
+  <%= button_to 'Add a new movie', '#', method: :post, data: { action:
+  'click->rating-form#toggle_movie_form' } %>
+
+  <div class="field">
+    <%= f.label :movie %><br />
+
+    <div class="hidden" data-rating-form-target="new">
+      <%= f.fields_for :movie do |movie_fields| %> <%= movie_fields.label :title
+      %> <%= movie_fields.text_field :title %> <% end %>
+    </div>
+    <div data-rating-form-target="existing">
+      <%= f.collection_select(:movie_id, Movie.all, :id, :title) %>
+    </div>
+  </div>
+
   <div class="field">
     <%= f.label :score %><br />
     <%= f.select :score, options_for_select([ ['A+', 15], ['A', 14], ['A-', 13],
@@ -11,20 +27,6 @@
   <div class="field">
     <%= f.label :user_id %><br />
     <%= f.collection_select(:user_id, User.all, :id, :first_name) %>
-  </div>
-
-  <%= button_to 'Add a new movie', '#', method: :post, data: { action:
-  'click->rating-form#toggle_movie_form' } %>
-
-  <div class="field hidden" data-target="rating-form.new">
-    <%= f.label :new_movie, 'New Movie?' %> <%= f.fields_for :movie, id:
-    'new-movie-form' do |movie_fields| %> <%= movie_fields.label :title %> <%=
-    movie_fields.text_field :title %> <% end %>
-  </div>
-
-  <div class="field" data-target="rating-form.existing">
-    <%= f.label :movie_id %><br />
-    <%= f.collection_select(:movie_id, Movie.all, :id, :title) %>
   </div>
 
   <div class="field">
