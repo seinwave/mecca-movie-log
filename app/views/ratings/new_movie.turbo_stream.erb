@@ -1,0 +1,11 @@
+<turbo-stream action="replace" target="movie-button">
+  <template>
+   <%= render 'rate_existing_movie_button', locals: { f: f } %>
+  </template> 
+</turbo-stream>
+
+<turbo-stream action="replace" target="movie-selection">
+  <template>
+    <%= render 'new_movie_input', locals: { f: f } %> 
+  </template>
+</turbo-stream>
