@@ -1,6 +1,4 @@
 <div>
   <%= f.fields_for :movie do |movie_fields| %> <%= movie_fields.label :title %>
-  <%= movie_fields.text_field :title %> <% end %> <%= button_to 'Rate existing
-  movie', select_movie_path, method: :post, data: { turbo_action: 'replace',
-  turbo_frame: 'movie-selection' } %>
+  <%= movie_fields.text_field :title %> <% end %>
 </div>

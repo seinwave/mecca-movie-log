@@ -1,3 +1,8 @@
+<div id="movie-button" data-turbo-frame="movie-button">
+  <%= button_to 'Add new movie', new_movie_path, method: :post, data: {
+  turbo_action: 'replace', turbo_frame: 'movie-button movie-selection' } %>
+</div>
+
 <%= form_for(@rating) do |f| %>
 
 <div data-controller="rating-form">
