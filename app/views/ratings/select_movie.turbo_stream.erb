@@ -1,11 +1,11 @@
 <turbo-stream action="replace" target="movie-button">
   <template>
-   <%= render 'add_new_movie_button', locals: { f: f } %>
+   <%= render 'add_new_movie_button' %>
   </template>
 </turbo-stream>
 
 <turbo-stream action="replace" target="movie-selection">
   <template>
-    <%= render 'select_movie_dropdown', locals: { f: f } %> 
+    <%= render 'select_movie_dropdown', locals: { rating: @rating } %> 
   </template>
 </turbo-stream>
