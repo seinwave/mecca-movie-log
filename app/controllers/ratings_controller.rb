@@ -23,7 +23,7 @@ class RatingsController < ApplicationController
   def new_movie
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('movie-selection', partial: 'new_movie_input')
+        render turbo_stream: turbo_stream.replace('movie-selection', partial: 'new_movie_input', locals: { f: @rating_form })
       end
     end
   end
@@ -31,7 +31,7 @@ class RatingsController < ApplicationController
   def select_movie
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('movie-selection', partial: 'select_movie_dropdown')
+        render turbo_stream: turbo_stream.replace('movie-selection', partial: 'select_movie_dropdown', locals: { f: @rating_form })
       end
     end
   end
