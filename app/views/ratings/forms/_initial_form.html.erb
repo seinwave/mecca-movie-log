@@ -4,9 +4,9 @@
     <%= f.label :movie %><br />
 
     <div>
-  <%= f.fields_for :movie do |movie_fields| %> <%= movie_fields.label :title %>
-  <%= movie_fields.text_field :title %> <% end %>
-</div>
+      <%= f.collection_select(:movie_id, Movie.all.order(:title), :id, :title)
+      %>
+    </div>
   </div>
 </div>
 

@@ -4,8 +4,8 @@
   </template>
 </turbo-stream>
 
-<turbo-stream action="replace" target="movie-selection">
+<turbo-stream action="replace" target="movie-form">
   <template>
-    <%= render 'select_movie_dropdown', locals: { rating: @rating } %> 
+    <%= render partial: 'ratings/forms/existing_movie_form'%> 
   </template>
 </turbo-stream>
