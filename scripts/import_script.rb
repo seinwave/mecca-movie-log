@@ -66,7 +66,7 @@ class MovieImporter
   end
 
   def import_data(dir_path)
-    clear_existing_data if Rating.count > 0 || Movie.count > 0
+    clear_existing_data if Rating.count.positive? || Movie.count.positive?
 
     files = Dir.entries(dir_path)
     files.each do |file|

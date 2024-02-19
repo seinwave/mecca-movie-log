@@ -20,15 +20,35 @@ class RatingsController < ApplicationController
     end
   end
 
+  def new_movie
+    generate_form_rating
+    @rating.build_movie
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+  end
+
+  def select_movie
+    generate_form_rating
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+  end
+
   private
 
   def seed_rating_page
     @ratings = Rating.grouped_and_sorted_by_date || []
     @rebecca = User.find_by(first_name: 'Rebecca')
     @matt = User.find_by(first_name: 'Matt')
+    generate_form_rating
+  end
+
+  def generate_form_rating
     date = Date.today.strftime('%Y/%m/%d')
     @rating = Rating.new(watched_date: date)
-    @rating.build_movie
   end
 
   def rating_params
