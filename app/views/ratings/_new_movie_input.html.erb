@@ -1,0 +1,4 @@
+<div>
+  <%= f.fields_for :movie do |movie_fields| %> <%= movie_fields.label :title %>
+  <%= movie_fields.text_field :title %> <% end %>
+</div>
