@@ -20,6 +20,22 @@ class RatingsController < ApplicationController
     end
   end
 
+  def new_movie
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('movie-selection', partial: 'new_movie_input')
+      end
+    end
+  end
+
+  def select_movie
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('movie-selection', partial: 'select_movie_dropdown')
+      end
+    end
+  end
+
   private
 
   def seed_rating_page
