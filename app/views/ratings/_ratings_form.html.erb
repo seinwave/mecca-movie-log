@@ -5,16 +5,18 @@
   'click->rating-form#toggle_movie_form', 'rating-form-target':'toggleButton' }
   %>
 
-  <div class="field">
-    <%= f.label :movie %><br />
+  <div id="movie-selection" data-turbo-frame="movie-selection">
+    <div class="field">
+      <%= f.label :movie %><br />
 
-    <div class="hidden" data-rating-form-target="new">
-      <%= f.fields_for :movie do |movie_fields| %> <%= movie_fields.label :title
-      %> <%= movie_fields.text_field :title %> <% end %>
-    </div>
-    <div data-rating-form-target="existing">
-      <%= f.collection_select(:movie_id, Movie.all.order(:title), :id, :title)
-      %>
+      <div>
+        <%= f.fields_for :movie do |movie_fields| %> <%= movie_fields.label
+        :title %> <%= movie_fields.text_field :title %> <% end %>
+      </div>
+      <div>
+        <%= f.collection_select(:movie_id, Movie.all.order(:title), :id, :title)
+        %>
+      </div>
     </div>
   </div>
 
