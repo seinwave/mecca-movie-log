@@ -59,6 +59,7 @@ class MovieImporter
   def initialize
     @current_month = nil
     @current_year = nil
+    @environment = 'development'
   end
 
   def clear_existing_data

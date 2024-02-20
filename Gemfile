@@ -13,8 +13,8 @@ gem 'faker'
 gem 'guard-rspec', require: false
 gem 'rails-controller-testing'
 gem 'rspec-rails', '~> 6.0.2'
+gem 'database_cleaner-active_record'
 group :development, :test do
-  gem 'database_cleaner-active_record'
   gem 'factory_bot_rails'
 end
 
