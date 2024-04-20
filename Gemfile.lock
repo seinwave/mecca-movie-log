@@ -131,6 +131,7 @@ GEM
     irb (1.11.1)
       rdoc
       reline (>= 0.4.2)
+    jb (0.8.2)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -320,6 +321,7 @@ DEPENDENCIES
   faker
   guard-rspec
   importmap-rails
+  jb
   jbuilder
   pg (~> 1.1)
   puma (~> 5.0)

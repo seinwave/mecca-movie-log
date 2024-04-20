@@ -18,6 +18,9 @@ group :development, :test do
   gem 'factory_bot_rails'
 end
 
+
+gem 'jb'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.0.8'
 
